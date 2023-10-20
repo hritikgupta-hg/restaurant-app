@@ -20,7 +20,7 @@ const Carouseldata = ({ data }) => {
       <div className="text-center text-gray-600 font-semibold text-[13px]">
         ₹{data.price}
       </div>
-      {authCtx.user && (
+      {authCtx?.user?.userInfo && (
         <button
           onClick={() => cartCtx.addItem(data)}
           type="button"

@@ -117,7 +117,7 @@ const Header = () => {
               </li>
             </ul>
 
-            {authCtx.user.userInfo && (
+            {authCtx?.user?.userInfo && (
               <div onClick={() => setShowCart(true)} className="relative ">
                 <CartIcon className="text-textColor text-2xl cursor-pointer " />
                 <div className="bg-red-600 h-5 w-5 rounded-full absolute -top-4 -right-4 flex items-center justify-center text-white text-[12px] ">
@@ -168,12 +168,14 @@ const Header = () => {
 
         {/* mobile */}
         <div className="flex items-center justify-between md:hidden h-full w-full ">
-          <div onClick={() => setShowCart(true)} className="relative ">
-            <CartIcon className="text-textColor text-2xl cursor-pointer " />
-            <div className="bg-red-600 h-5 w-5 rounded-full absolute -top-4 -right-4 flex items-center justify-center text-white text-[12px] ">
-              {cartCtx?.cart?.quantity}
+          {authCtx?.user?.userInfo && (
+            <div onClick={() => setShowCart(true)} className="relative ">
+              <CartIcon className="text-textColor text-2xl cursor-pointer " />
+              <div className="bg-red-600 h-5 w-5 rounded-full absolute -top-4 -right-4 flex items-center justify-center text-white text-[12px] ">
+                {cartCtx?.cart?.quantity}
+              </div>
             </div>
-          </div>
+          )}
           <Link to="/">
             <img src={Logo} className="w-10 object-cover " alt="logo" />
           </Link>
