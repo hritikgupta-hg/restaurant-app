@@ -1,14 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import { motion } from "framer-motion";
 import { BsFillCartFill } from "react-icons/bs";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
-import { FcRefresh } from "react-icons/fc";
+import { FcLeave, FcRefresh } from "react-icons/fc";
 import CartContext from "../store/cart-context";
 import CartItem from "./CartItem";
 import emptyCart from "../img/emptyCart.svg";
+import Modal from "./Modal";
 
 const CartContainer = ({ hideCart }) => {
+  const [checkedOut, setCheckedOut] = useState(false);
   const cartCtx = useContext(CartContext);
   // console.log(cartCtx.cart.subTotal + cartCtx.cart.delivery);
   return (
@@ -69,11 +71,62 @@ const CartContainer = ({ hideCart }) => {
             </div>
 
             <button
+              onClick={() => setCheckedOut(true)}
               type="button"
               className="w-full rounded-xl bg-gradient-to-tr  from-orange-400 to-orange-600  text-gray-50 text-lg p-2 hover:shadow-xl "
             >
               Check Out
             </button>
+
+            {checkedOut && (
+              <Modal close={setCheckedOut}>
+                <div className="p-5 flex flex-col gap-4 w-[320px] md:w-[500px]">
+                  <p className=" text-[12px] text-red-500 text-center">
+                    *Right now only cash on delivery is available
+                  </p>
+
+                  <input
+                    required
+                    maxLength={200}
+                    id="address"
+                    type="text"
+                    placeholder="Enter your Address here"
+                    className=" p-2 placeholder:text-xs text-xs placeholder:text-gray-400 border-none outline-none"
+                  ></input>
+                  <input
+                    required
+                    maxLength={10}
+                    id="address"
+                    type="text"
+                    placeholder="Enter your contact number here"
+                    className=" p-2 placeholder:text-xs text-xs placeholder:text-gray-400 border-none outline-none"
+                  ></input>
+
+                  <div className="w-full flex justify-between">
+                    <p className=" text-xl font-semibold">Total</p>
+                    <p className=" text-gray-600 text-xl font-semibold">
+                      ₹ {cartCtx.cart.subTotal + cartCtx.cart.delivery}
+                    </p>
+                  </div>
+                  <div className="flex justify-end gap-5 md:gap-10 ">
+                    <button
+                      onClick={() => setCheckedOut(true)}
+                      type="button"
+                      className=" px-3 md:py-1 text-sm md:text-base rounded-md md:rounded-lg bg-gradient-to-tr  from-orange-400 to-orange-600  text-gray-50 hover:shadow-xl "
+                    >
+                      confirm
+                    </button>
+                    <button
+                      onClick={() => setCheckedOut(false)}
+                      type="button"
+                      className="px-3 md:py-1 rounded-lg border-2  hover:shadow-xl "
+                    >
+                      cancel
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+            )}
           </div>
         </div>
       ) : (
